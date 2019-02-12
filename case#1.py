@@ -45,15 +45,25 @@ def main():
     year = 1
     ground = 1000
     money = 21000
-    grain = 39500
+    grain = 43000
     people = 500
     distemper = 0
     #Вывод некрасивый, надо исправить.
     # TODO
     print('Год:', year, '\n', 'Земля:', ground, '\n', 'Деньги:', money, '\n', 'Зерно:', grain, '\n', 'Люди:', people,
           '\n', 'Смута:', distemper)
+
     money, grain = main_questions(money, grain)
     year += 1
+
+
+    # Смута.
+    if grain / people < 50 or ground / people < 1:
+        distemper += 10
+    elif distemper > 5:
+        if grain / people > 80 or ground / people > 2.5:
+            distemper -= 10
+
     print('Год:', year, '\n', 'Земля:', ground, '\n', 'Деньги:', money, '\n', 'Зерно:', grain, '\n', 'Люди:', people,
           '\n', 'Смута:', distemper)
 

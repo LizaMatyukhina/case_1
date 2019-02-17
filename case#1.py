@@ -59,12 +59,13 @@ def plants(ground, grain):
         grain += answer_2 * 1.5
     else:
         grain += answer_2 * 2
-        phrase = 'Вам повезло, этот год был богат на урожай, мой Король!!'
+        phrase = 'Вам повезло, этот год был богат на урожай, мой Король!!!'
     ground -= answer_2 // 10
     return int(grain), int(ground), phrase
 
 
 def situation(randomness, indicators, option, nooption):
+    '''Генерация событий на основе рандома'''
     if randomness == 1:
         l = random.randint(0, 4)
         print(option[l])

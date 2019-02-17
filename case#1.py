@@ -61,34 +61,130 @@ def plants(ground, grain):
     ground -= answer_2 // 10
     return int(grain), int(ground), phrase
 
-def main():
-    year = 1
-    ground = 1000
-    money = 21000
-    grain = 43000
-    people = 500
-    distemper = 0
+def situation(randomness, indicators, option, nooption):
+    if randomness == 1:
+        l = random.randint(0, 4)
+        print(option[l])
+        answer = input()
+        if l == 0 and answer.lower() == 'да':
+            if random.randint(0, 1) == 1:
+                print('Поздравляю, ваше королевство одержало победу. +100 к земле')
+                indicators['ground'] += 100
+            else:
+                print('К сожалению, ваше королевство проиграло. На войне погибло 40 человек')
+                indicators['people'] -= 40
+
+        elif l == 1 and answer.lower() == 'да':
+            if random.randint(0, 1) == 1:
+                print('Поздравляю, ограбление прошло успешно. +3000 к казне')
+                indicators['money'] += 3000
+            else:
+                print('К сожалению, ваших людей взяди в плен и согласились обменять на 200 у.е. земли')
+                indicators['ground'] -=200
+
+        elif l == 2 and answer.lower() == 'да':
+            if random.randint(0, 1) == 1:
+                print('Поздравляю, клад был найден. +2500 к казне')
+                indicators['money'] += 2500
+            else:
+                print('К сожалению, ваши люди зааблудились. Вы потеряли 20 человек')
+                indicators['people'] -= 20
+
+        elif l == 3 and answer.lower() == 'да':
+            if random.randint(0, 1) == 1:
+                print('Поздравляю, вам удалось увеличить всход зерна. +6000 у.е. зерна')
+                indicators['grain'] += 2500
+            else:
+                print('Упс. Вы связались с шарлатаном. -20000 зерна!')
+                indicators['grain'] -= 20000
+
+        elif l == 3 and answer.lower() == 'да':
+            if random.randint(0, 1) == 1:
+                print('Какой удачный брак! Жених подарил вам 250 у.е. земли')
+                indicators['ground'] += 250
+            else:
+                print('Жениху очень не понравилась невеста, он требует моральную компенсацию в размере 4000'
+                      'денежных единиц')
+                indicators['money'] -= 4000
+        else:
+            pass
+
+    else:
+        l = random.randint(0, 7)
+        print(nooption[l], end=' ')
+        if l == 0:
+            indicators['grain']+=1000
+            print('Вы получили 1000 зерна')
+        if l == 1:
+            indicators['money']+=800
+            print('Вы получили 800 денег')
+        if l == 2:
+            indicators['grain']-=14000
+            print('Вы потеряли 14000 зерна')
+        if l == 3:
+            indicators['money']-=1000
+            print('Вы потеряли 1000 денег')
+        if l == 4:
+            indicators['people']-=70
+            print('Вы потеряли 70 людей')
+        if l == 5:
+            indicators['ground']+=100
+            print('Вы получили 100 земли')
+        if l == 6:
+            indicators['ground']-=85
+            print('Вы потеряли 85 земли')
+        if l == 7:
+            indicators['people']+=150
+            print('Вы получили 150 человек')
+    return (indicators)
+
+
+def important(ind):
+    '''Задает основные вопросы, выдает события, спрашивает об окончании программы'''
+
+    option = ['Наступила война. Готовы поучаствовать?', 'Ограбление каравана. Хотите ограбить?',
+              'Ваши подданные принесли вам карту с местонахождением клада. Отправить экспедицию на поиски?',
+              'Один волщебник вашего королевства варит отменные зелья в качестве удобрений. Желаете попробовать?',
+              'В соседнем королевстве на троне восседает завидный жених. Выдать вашу крошку замуж?']
+    nooption = ['День рождение у короля-соседа.', 'Потайная комната с золотом.', 'Наводнение.',
+                'Ограбили казну.', 'Чума.', 'Обмельчание воды.', 'Набег кочевников.',
+                'Зелье для продолжительности жизни.']
+
+    indicators = ind
     #Вывод некрасивый, надо исправить.
     # TODO
-    print('Год:', year, '\n', 'Земля:', ground, '\n', 'Деньги:', money, '\n', 'Зерно:', grain, '\n', 'Люди:', people,
-          '\n', 'Смута:', distemper)
 
-    money, grain, people = main_questions(money, grain, people)
-    grain, ground, phrase = plants(ground, grain)
+    indicators['money'], indicators['grain'], indicators['people'] = main_questions(indicators['money'],
+                                                                                    indicators['grain'], indicators['people'])
+    grain, ground, phrase = plants(indicators['ground'], indicators['grain'])
 
-    year += 1
+    indicators['year'] += 1
 
     # Смута.
-    if grain / people < 50 or ground / people < 1:
-        distemper += 10
-    elif distemper > 5:
-        if grain / people > 80 or ground / people > 2.5:
-            distemper -= 10
+    if indicators['grain'] / indicators['people'] < 50 or indicators['ground'] / indicators['people'] < 1:
+        indicators['distemper'] += 10
+    elif indicators['distemper'] > 5:
+        if indicators['grain'] / indicators['people'] > 80 or indicators['ground'] / indicators['people'] > 2.5:
+            indicators['distemper'] -= 10
 
-
-    print('Год:', year, '\n', 'Земля:', ground, '\n', 'Деньги:', money, '\n', 'Зерно:', grain, '\n', 'Люди:', people,
-          '\n', 'Смута:', distemper)
     print(phrase)
 
+    indicators = situation(random.randint(0, 1), indicators, option, nooption)
+
+
+    ans = input('Хотите продолжить игру? \n')
+    if ans.lower()=='да':
+        important(ind)
+    else:
+        print('Спасибо за участие в нашей игре, ваши итоги!')
+        print('Год:', indicators['year'], '\n', 'Земля:', indicators['ground'], '\n', 'Деньги:', indicators['money'],
+              '\n',
+              'Зерно:', indicators['grain'], '\n', 'Люди:', indicators['people'], '\n', 'Смута:',
+              indicators['distemper'])
+
+
+def main():
+    indicators = {'year': 1, 'money': 21000, 'people': 500, 'ground': 1000, 'grain': 43000, 'distemper': 0}
+    important(indicators)
 if __name__ == '__main__':
     main()

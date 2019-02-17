@@ -5,6 +5,7 @@ Case #1
 import random
 from ru_local import *
 
+
 # The initial status.
 
 
@@ -15,11 +16,11 @@ def main_questions(money, grain, people):
     print(question)
     answer = int(input())
     if question == Q1:
-        money = money - answer*12
+        money = money - answer * 12
     elif question == Q2:
-        money -= answer*14
+        money -= answer * 14
     elif question == Q3:
-        money -= answer*13
+        money -= answer * 13
     grain += answer
 
     # Вопросы о продаже зерна.
@@ -33,7 +34,7 @@ def main_questions(money, grain, people):
         money += answer * 5
     grain -= answer
 
-# Вопрос о раздаче зерна людям.
+    # Вопрос о раздаче зерна людям.
     print('Сколько зерна мы будем раздавть нашим подчиненным в этом году мой Король?')
     answer_3 = int(input())
     grain -= answer_3
@@ -42,6 +43,7 @@ def main_questions(money, grain, people):
     elif grain / people < 40:
         people *= 0.9
     return int(money), int(grain), int(people)
+
 
 def plants(ground, grain):
     # Вопросы о посеве зерна.
@@ -60,6 +62,7 @@ def plants(ground, grain):
         phrase = 'Вам повезло, этот год был богат на урожай, мой Король!!'
     ground -= answer_2 // 10
     return int(grain), int(ground), phrase
+
 
 def situation(randomness, indicators, option, nooption):
     if randomness == 1:
@@ -80,7 +83,7 @@ def situation(randomness, indicators, option, nooption):
                 indicators['money'] += 3000
             else:
                 print('К сожалению, ваших людей взяди в плен и согласились обменять на 200 у.е. земли')
-                indicators['ground'] -=200
+                indicators['ground'] -= 200
 
         elif l == 2 and answer.lower() == 'да':
             if random.randint(0, 1) == 1:
@@ -113,28 +116,28 @@ def situation(randomness, indicators, option, nooption):
         l = random.randint(0, 7)
         print(nooption[l], end=' ')
         if l == 0:
-            indicators['grain']+=1000
+            indicators['grain'] += 1000
             print('Вы получили 1000 зерна')
         if l == 1:
-            indicators['money']+=800
+            indicators['money'] += 800
             print('Вы получили 800 денег')
         if l == 2:
-            indicators['grain']-=14000
+            indicators['grain'] -= 14000
             print('Вы потеряли 14000 зерна')
         if l == 3:
-            indicators['money']-=1000
+            indicators['money'] -= 1000
             print('Вы потеряли 1000 денег')
         if l == 4:
-            indicators['people']-=70
+            indicators['people'] -= 70
             print('Вы потеряли 70 людей')
         if l == 5:
-            indicators['ground']+=100
+            indicators['ground'] += 100
             print('Вы получили 100 земли')
         if l == 6:
-            indicators['ground']-=85
+            indicators['ground'] -= 85
             print('Вы потеряли 85 земли')
         if l == 7:
-            indicators['people']+=150
+            indicators['people'] += 150
             print('Вы получили 150 человек')
     return (indicators)
 
@@ -151,11 +154,12 @@ def important(ind):
                 'Зелье для продолжительности жизни.']
 
     indicators = ind
-    #Вывод некрасивый, надо исправить.
+    # Вывод некрасивый, надо исправить.
     # TODO
 
     indicators['money'], indicators['grain'], indicators['people'] = main_questions(indicators['money'],
-                                                                                    indicators['grain'], indicators['people'])
+                                                                                    indicators['grain'],
+                                                                                    indicators['people'])
     grain, ground, phrase = plants(indicators['ground'], indicators['grain'])
 
     indicators['year'] += 1
@@ -168,16 +172,14 @@ def important(ind):
             indicators['distemper'] -= 10
 
     print(phrase)
-
     indicators = situation(random.randint(0, 1), indicators, option, nooption)
 
-
     ans = input('Хотите продолжить игру? \n')
-    if ans.lower()=='да':
+    if ans.lower() == 'да':
         important(ind)
     else:
         print('Спасибо за участие в нашей игре, ваши итоги!')
-        print('Год:', indicators['year'], '\n', 'Земля:', indicators['ground'], '\n', 'Деньги:', indicators['money'],
+        print("Год:", indicators['year'], '\n', 'Земля:', indicators['ground'], '\n', 'Деньги:', indicators['money'],
               '\n',
               'Зерно:', indicators['grain'], '\n', 'Люди:', indicators['people'], '\n', 'Смута:',
               indicators['distemper'])
@@ -186,5 +188,7 @@ def important(ind):
 def main():
     indicators = {'year': 1, 'money': 21000, 'people': 500, 'ground': 1000, 'grain': 43000, 'distemper': 0}
     important(indicators)
+
+
 if __name__ == '__main__':
     main()

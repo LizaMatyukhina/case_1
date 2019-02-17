@@ -83,7 +83,7 @@ def situation(randomness, indicators, option, nooption):
                 print('Поздравляю, ограбление прошло успешно. +3000 к казне')
                 indicators['money'] += 3000
             else:
-                print('К сожалению, ваших людей взяди в плен и согласились обменять на 200 у.е. земли')
+                print('К сожалению, ваших людей взяли в плен и согласились обменять на 200 у.е. земли')
                 indicators['ground'] -= 200
 
         elif l == 2 and answer.lower() == 'да':
@@ -155,13 +155,16 @@ def important(ind):
                 'Зелье для продолжительности жизни.']
 
     indicators = ind
-    # Вывод некрасивый, надо исправить.
-    # TODO
+
+    print("Год:", indicators['year'], '\n', 'Земля:', indicators['ground'], '\n', 'Деньги:', indicators['money'],
+          '\n',
+          'Зерно:', indicators['grain'], '\n', 'Люди:', indicators['people'], '\n', 'Смута:',
+          indicators['distemper'])
 
     indicators['money'], indicators['grain'], indicators['people'] = main_questions(indicators['money'],
                                                                                     indicators['grain'],
                                                                                     indicators['people'])
-    grain, ground, phrase = plants(indicators['ground'], indicators['grain'])
+    indicators['grain'], indicators['ground'], phrase = plants(indicators['ground'], indicators['grain'])
 
     indicators['year'] += 1
 

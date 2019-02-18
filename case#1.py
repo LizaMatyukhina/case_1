@@ -14,7 +14,11 @@ def main_questions(money, grain, people):
     quest_buy = [Q1, Q2, Q3, Q6, Q7]
     question = random.choice(quest_buy)
     print(question)
-    answer = int(input())
+    answer = input()
+    while answer.isdigit() == False:
+        print('Введите целочисленное значение:')
+        answer = input()
+    answer = int(answer)
     if question == Q1:
         money = money - answer * 12
     elif question == Q2:
@@ -23,11 +27,16 @@ def main_questions(money, grain, people):
         money -= answer * 13
     grain += answer
 
+
     # Вопросы о продаже зерна.
     quest_sell = [Q4, Q5, Q8, Q9, Q10]
     question_2 = random.choice(quest_sell)
     print(question_2)
-    answer = int(input())
+    answer = input()
+    while answer.isdigit() == False:
+        print('Введите целочисленное значение:')
+        answer = input()
+    answer = int(answer)
     if question == Q4:
         money += answer * 7
     elif question == Q5:
@@ -36,7 +45,11 @@ def main_questions(money, grain, people):
 
     # Вопрос о раздаче зерна людям.
     print(DISTRIBUTION_OF_GRAIN)
-    answer_3 = int(input())
+    answer_3 = input()
+    while answer_3.isdigit() == False:
+        print('Введите целочисленное значение:')
+        answer_3 = input()
+    answer_3 = int(answer)
     grain -= answer_3
     if grain / people > 90:
         people *= 1.1
@@ -48,7 +61,11 @@ def main_questions(money, grain, people):
 def plants(ground, grain):
     # Вопросы о посеве зерна.
     print(SOWING_OF_GRAIN)
-    answer_2 = int(input())
+    answer_2 = input()
+    while answer_2.isdigit() == False:
+        print('Введите целочисленное значение:')
+        answer_2 = input()
+    answer_2 = int(answer_2)
     variants = [0, 1, 2]
     plant = random.choice(variants)
     phrase = ''

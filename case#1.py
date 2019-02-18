@@ -6,17 +6,14 @@ import random
 from ru_local import *
 
 
-# The initial status.
-
-
 def main_questions(money, grain, people):
-    # Вопросы о покупке зерна.
+    """Questions about buying, selling and distribution of grain."""
     quest_buy = [Q1, Q2, Q3, Q6, Q7]
     question = random.choice(quest_buy)
     print(question)
     answer = input()
     while answer.isdigit() == False:
-        print('Введите целочисленное значение:')
+        print(INPUT_INT_VALUE)
         answer = input()
     answer = int(answer)
     if question == Q1:
@@ -25,29 +22,38 @@ def main_questions(money, grain, people):
         money -= answer * 14
     elif question == Q3:
         money -= answer * 13
+    elif question == Q6:
+        money -= answer * 10
+    elif question == Q7:
+        money -= answer * 15
     grain += answer
 
 
-    # Вопросы о продаже зерна.
     quest_sell = [Q4, Q5, Q8, Q9, Q10]
     question_2 = random.choice(quest_sell)
     print(question_2)
     answer = input()
     while answer.isdigit() == False:
-        print('Введите целочисленное значение:')
+        print(INPUT_INT_VALUE)
         answer = input()
     answer = int(answer)
     if question == Q4:
         money += answer * 7
     elif question == Q5:
         money += answer * 5
+    elif question == Q8:
+        money += answer * 6
+    elif question == Q9:
+        money += answer * 9
+    elif question == Q10:
+        money += 8
     grain -= answer
 
-    # Вопрос о раздаче зерна людям.
+
     print(DISTRIBUTION_OF_GRAIN)
     answer_3 = input()
     while answer_3.isdigit() == False:
-        print('Введите целочисленное значение:')
+        print(INPUT_INT_VALUE)
         answer_3 = input()
     answer_3 = int(answer)
     grain -= answer_3
@@ -59,11 +65,11 @@ def main_questions(money, grain, people):
 
 
 def plants(ground, grain):
-    # Вопросы о посеве зерна.
+    """Questions about sowing of grain."""
     print(SOWING_OF_GRAIN)
     answer_2 = input()
     while answer_2.isdigit() == False:
-        print('Введите целочисленное значение:')
+        print(INPUT_INT_VALUE)
         answer_2 = input()
     answer_2 = int(answer_2)
     variants = [0, 1, 2]
@@ -82,7 +88,7 @@ def plants(ground, grain):
 
 
 def situation(randomness, indicators, option, nooption):
-    '''Генерация событий на основе рандома'''
+    """Random-based event generation."""
     if randomness == 1:
         l = random.randint(0, 4)
         print(option[l])
@@ -160,18 +166,15 @@ def situation(randomness, indicators, option, nooption):
 
 
 def important(ind):
-    '''Задает основные вопросы, выдает события, спрашивает об окончании программы'''
-
+    """Asking the main questions, giving the events, asking about the end of game."""
     option = [WAR, ROBBERY, TREASURE_HUNT, FERTILIZER_POTION, MARRIAGE]
-    nooption = ['День рождение у короля-соседа.', 'Потайная комната с золотом.', 'Наводнение.',
-                'Ограбили казну.', 'Чума.', 'Обмельчание воды.', 'Набег кочевников.',
-                'Зелье для продолжительности жизни.']
+    nooption = [BIRTHDAY, SECRET_ROOM_WITH_GOLD, FLOOD, ROBBERY_OF_TREASURY, PLAGUE, WATER_SHREDDING, NOMAD_RAID,
+                LONGEVITY_POTION]
 
     indicators = ind
 
-    print('Год:', indicators['year'], '\n', 'Земля:', indicators['ground'], '\n', 'Деньги:', indicators['money'],
-          '\n',
-          'Зерно:', indicators['grain'], '\n', 'Люди:', indicators['people'], '\n', 'Смута:',
+    print(YEAR, indicators['year'], '\n', GROUND, indicators['ground'], '\n', MONEY, indicators['money'],
+          '\n', GRAIN, indicators['grain'], '\n', PEOPLE, indicators['people'], '\n', DISTEMPER,
           indicators['distemper'])
 
     indicators['money'], indicators['grain'], indicators['people'] = main_questions(indicators['money'],
@@ -181,7 +184,7 @@ def important(ind):
 
     indicators['year'] += 1
 
-    # Смута.
+
     if indicators['grain'] / indicators['people'] < 50 or indicators['ground'] / indicators['people'] < 1:
         indicators['distemper'] += 10
     elif indicators['distemper'] > 5:
@@ -191,18 +194,23 @@ def important(ind):
     print(phrase)
     indicators = situation(random.randint(0, 1), indicators, option, nooption)
 
+
     ans = input(GAME_CONTINUE)
     if ans.lower() == YES:
-        important(ind)
+        if indicators['ground'] // indicators['people'] <= 0.4 or indicators['distemper'] == 100 or \
+                indicators['grain'] // indicators['people'] == 30 or indicators['money'] <= 0:
+            print(THE_END)
+        else:
+            important(ind)
     else:
         print(GAME_EXIT)
-        print('Год:', indicators['year'], '\n', 'Земля:', indicators['ground'], '\n', 'Деньги:', indicators['money'],
-              '\n',
-              'Зерно:', indicators['grain'], '\n', 'Люди:', indicators['people'], '\n', 'Смута:',
+        print(YEAR, indicators['year'], '\n', GROUND, indicators['ground'], '\n', MONEY, indicators['money'],
+              '\n', GRAIN, indicators['grain'], '\n', PEOPLE, indicators['people'], '\n', DISTEMPER,
               indicators['distemper'])
 
 
 def main():
+    """The main function."""
     indicators = {'year': 1, 'money': 21000, 'people': 500, 'ground': 1000, 'grain': 43000, 'distemper': 0}
     important(indicators)
 

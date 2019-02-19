@@ -172,7 +172,8 @@ def important(ind):
     indicators = ind
 
     print(YEAR, indicators['year'], '\n', GROUND, indicators['ground'], '\n', MONEY, indicators['money'], '\n',
-          GRAIN, indicators['grain'], '\n', PEOPLE, indicators['people'], '\n', DISTEMPER, indicators['distemper'])
+          GRAIN, indicators['grain'], '\n', PEOPLE, indicators['people'], '\n', DISTEMPER, indicators['distemper'],
+          sep='')
 
     indicators['money'], indicators['grain'], indicators['people'] = main_questions(indicators['money'],
                                                                                     indicators['grain'],
@@ -197,14 +198,14 @@ def important(ind):
             print(THE_END)
             print(TOTAL_RESULTS, '\n', YEAR, indicators['year'], '\n', GROUND, indicators['ground'], '\n', MONEY,
                   indicators['money'], '\n', GRAIN, indicators['grain'], '\n', PEOPLE, indicators['people'], '\n',
-                  DISTEMPER, indicators['distemper'])
+                  DISTEMPER, indicators['distemper'], sep='')
         else:
             important(ind)
     else:
         print(GAME_EXIT)
         print(YEAR, indicators['year'], '\n', GROUND, indicators['ground'], '\n', MONEY, indicators['money'],
               '\n', GRAIN, indicators['grain'], '\n', PEOPLE, indicators['people'], '\n', DISTEMPER,
-              indicators['distemper'])
+              indicators['distemper'], sep='')
 
 
 def main():

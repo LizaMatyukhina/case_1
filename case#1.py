@@ -12,7 +12,7 @@ def main_questions(money, grain, people):
     question = random.choice(quest_buy)
     print(question)
     answer = input()
-    while answer.isdigit() == False:
+    while answer.isdigit() is False:
         print(INPUT_INT_VALUE)
         answer = input()
     answer = int(answer)
@@ -28,12 +28,11 @@ def main_questions(money, grain, people):
         money -= answer * 15
     grain += answer
 
-
     quest_sell = [Q4, Q5, Q8, Q9, Q10]
     question_2 = random.choice(quest_sell)
     print(question_2)
     answer = input()
-    while answer.isdigit() == False:
+    while answer.isdigit() is False:
         print(INPUT_INT_VALUE)
         answer = input()
     answer = int(answer)
@@ -49,10 +48,9 @@ def main_questions(money, grain, people):
         money += 8
     grain -= answer
 
-
     print(DISTRIBUTION_OF_GRAIN)
     answer_3 = input()
-    while answer_3.isdigit() == False:
+    while answer_3.isdigit() is False:
         print(INPUT_INT_VALUE)
         answer_3 = input()
     answer_3 = int(answer)
@@ -68,7 +66,7 @@ def plants(ground, grain):
     """Questions about sowing of grain."""
     print(SOWING_OF_GRAIN)
     answer_2 = input()
-    while answer_2.isdigit() == False:
+    while answer_2.isdigit() is False:
         print(INPUT_INT_VALUE)
         answer_2 = input()
     answer_2 = int(answer_2)
@@ -87,13 +85,13 @@ def plants(ground, grain):
     return int(grain), int(ground), phrase
 
 
-def situation(randomness, indicators, option, nooption):
+def situation(randomness, indicators, option, no_option):
     """Random-based event generation."""
     if randomness == 1:
-        l = random.randint(0, 4)
-        print(option[l])
+        n = random.randint(0, 4)
+        print(option[n])
         answer = input()
-        if l == 0 and answer.lower() == YES:
+        if n == 0 and answer.lower() == YES:
             if random.randint(0, 1) == 1:
                 print(WIN)
                 indicators['ground'] += 100
@@ -101,7 +99,7 @@ def situation(randomness, indicators, option, nooption):
                 print(LOSS)
                 indicators['people'] -= 40
 
-        elif l == 1 and answer.lower() == YES:
+        elif n == 1 and answer.lower() == YES:
             if random.randint(0, 1) == 1:
                 print(SUCCESSFUL_ROBBERY)
                 indicators['money'] += 3000
@@ -109,7 +107,7 @@ def situation(randomness, indicators, option, nooption):
                 print(FAILED_ROBBERY)
                 indicators['ground'] -= 200
 
-        elif l == 2 and answer.lower() == YES:
+        elif n == 2 and answer.lower() == YES:
             if random.randint(0, 1) == 1:
                 print(FOUND_TREASURE)
                 indicators['money'] += 2500
@@ -117,7 +115,7 @@ def situation(randomness, indicators, option, nooption):
                 print(NOT_FOUND_TREASURE)
                 indicators['people'] -= 20
 
-        elif l == 3 and answer.lower() == YES:
+        elif n == 3 and answer.lower() == YES:
             if random.randint(0, 1) == 1:
                 print(INCREASE_IN_GRAIN)
                 indicators['grain'] += 2500
@@ -125,7 +123,7 @@ def situation(randomness, indicators, option, nooption):
                 print(QUACKERY)
                 indicators['grain'] -= 20000
 
-        elif l == 3 and answer.lower() == YES:
+        elif n == 3 and answer.lower() == YES:
             if random.randint(0, 1) == 1:
                 print(SUCCESSFUL_MARRIAGE)
                 indicators['ground'] += 250
@@ -136,46 +134,45 @@ def situation(randomness, indicators, option, nooption):
             pass
 
     else:
-        l = random.randint(0, 7)
-        print(nooption[l], end=' ')
-        if l == 0:
+        n = random.randint(0, 7)
+        print(no_option[n], end=' ')
+        if n == 0:
             indicators['grain'] += 1000
             print(GRAIN_PLUS)
-        if l == 1:
+        if n == 1:
             indicators['money'] += 800
             print(MONEY_PLUS)
-        if l == 2:
+        if n == 2:
             indicators['grain'] -= 14000
             print(GRAIN_MINUS)
-        if l == 3:
+        if n == 3:
             indicators['money'] -= 1000
             print(MONEY_MINUS)
-        if l == 4:
+        if n == 4:
             indicators['people'] -= 70
             print(PEOPLE_MINUS)
-        if l == 5:
+        if n == 5:
             indicators['ground'] += 100
             print(GROUND_PLUS)
-        if l == 6:
+        if n == 6:
             indicators['ground'] -= 85
             print(GROUND_MINUS)
-        if l == 7:
+        if n == 7:
             indicators['people'] += 150
             print(PEOPLE_PLUS)
-    return (indicators)
+    return indicators
 
 
 def important(ind):
     """Asking the main questions, giving the events, asking about the end of game."""
     option = [WAR, ROBBERY, TREASURE_HUNT, FERTILIZER_POTION, MARRIAGE]
-    nooption = [BIRTHDAY, SECRET_ROOM_WITH_GOLD, FLOOD, ROBBERY_OF_TREASURY, PLAGUE, WATER_SHREDDING, NOMAD_RAID,
-                LONGEVITY_POTION]
+    no_option = [BIRTHDAY, SECRET_ROOM_WITH_GOLD, FLOOD, ROBBERY_OF_TREASURY, PLAGUE, WATER_SHREDDING, NOMAD_RAID,
+                 LONGEVITY_POTION]
 
     indicators = ind
 
-    print(YEAR, indicators['year'], '\n', GROUND, indicators['ground'], '\n', MONEY, indicators['money'],
-          '\n', GRAIN, indicators['grain'], '\n', PEOPLE, indicators['people'], '\n', DISTEMPER,
-          indicators['distemper'])
+    print(YEAR, indicators['year'], '\n', GROUND, indicators['ground'], '\n', MONEY, indicators['money'], '\n',
+          GRAIN, indicators['grain'], '\n', PEOPLE, indicators['people'], '\n', DISTEMPER, indicators['distemper'])
 
     indicators['money'], indicators['grain'], indicators['people'] = main_questions(indicators['money'],
                                                                                     indicators['grain'],
@@ -184,7 +181,6 @@ def important(ind):
 
     indicators['year'] += 1
 
-
     if indicators['grain'] / indicators['people'] < 50 or indicators['ground'] / indicators['people'] < 1:
         indicators['distemper'] += 10
     elif indicators['distemper'] > 5:
@@ -192,14 +188,16 @@ def important(ind):
             indicators['distemper'] -= 10
 
     print(phrase)
-    indicators = situation(random.randint(0, 1), indicators, option, nooption)
-
+    indicators = situation(random.randint(0, 1), indicators, option, no_option)
 
     ans = input(GAME_CONTINUE)
     if ans.lower() == YES:
-        if indicators['ground'] // indicators['people'] <= 0.4 or indicators['distemper'] == 100 or \
-                indicators['grain'] // indicators['people'] == 30 or indicators['money'] <= 0:
+        if indicators['distemper'] == 100 or indicators['ground'] <= 0 or indicators['money'] <= 0 or \
+                indicators['grain'] <= 0 or indicators['people'] <= 0:
             print(THE_END)
+            print(TOTAL_RESULTS, '\n', YEAR, indicators['year'], '\n', GROUND, indicators['ground'], '\n', MONEY,
+                  indicators['money'], '\n', GRAIN, indicators['grain'], '\n', PEOPLE, indicators['people'], '\n',
+                  DISTEMPER, indicators['distemper'])
         else:
             important(ind)
     else:
